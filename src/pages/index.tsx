@@ -2,33 +2,41 @@ import * as React from 'react'
 import type { HeadFC, PageProps } from 'gatsby'
 import { graphql, useStaticQuery } from 'gatsby'
 import Seo from '../components/Seo'
-import { IndexPageData } from '../types'
+import { ProductNode, QueryType } from '../types'
 import { Title } from './title'
+import './styles.css'
 
-const IndexPage: React.FC<PageProps<IndexPageData>> = () => {
-  const data: IndexPageData = useStaticQuery(graphql`
+const IndexPage: React.FC<PageProps<ProductNode>> = () => {
+  const data: QueryType = useStaticQuery(graphql`
     query {
-      allProducts {
-        id
-        title
-        price
-        description
-        image
+      allProduct {
+        edges {
+          node {
+            id
+            description
+            image
+            price
+            title
+          }
+        }
       }
     }
   `)
-
+  console.log(data.allProduct.edges)
+  // Event to go to an article page with keyboard
   return (
     <div>
       <Title />
-      <h1>Products</h1>
-      {data.allProducts.map((product) => (
-        <div key={product.id}>
-          <h2>{product.title}</h2>
-          <p>Price: ${product.price}</p>
-          <p>{product.description}</p>
-        </div>
-      ))}
+      <main role="main" className="products-grid">
+        {data.allProduct.edges.map((product) => (
+          <article key={product.node.id} className="product-card" tabIndex={0} role="button">
+            <h2>{product.node.title}</h2>
+            <p>Price: ${product.node.price}</p>
+            <p>{product.node.description}</p>
+            <img className="image" src={product.node.image} alt={product.node.title} />
+          </article>
+        ))}
+      </main>
     </div>
   )
 }

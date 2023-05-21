@@ -1,0 +1,16 @@
+.products-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 20px;
+}
+
+.product-card {
+  width: 250px;
+  flex-grow: 1;
+  cursor: pointer;
+}
+.image {
+  width: 225px;
+  height: 200px;
+}

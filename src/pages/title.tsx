@@ -11,5 +11,5 @@ export const Title = () => {
       }
     }
   `)
-  return <>{data.site.siteMetadata.title}</>
+  return <h1>{data.site.siteMetadata.title}</h1>
 }

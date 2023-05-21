@@ -1,44 +1,24 @@
-import { CreateResolversArgs, GatsbyNode } from 'gatsby'
-import products from './src/eshop.json'
+import { GatsbyNode } from 'gatsby'
 import { ProductType } from './src/types'
+const fetch = require('node-fetch')
 
-const gatsbyNode: GatsbyNode = {
-  createSchemaCustomization: ({ actions }) => {
-    const { createTypes } = actions
-    const typeDefs = `
-      type Product implements Node {
-        id: Float!
-        title: String!
-        price: Float!
-        description: String!
-        image: String!
-      }
-    `
-    createTypes(typeDefs)
-  },
-
-  createResolvers: ({ createResolvers }: CreateResolversArgs) => {
-    const resolvers = {
-      Query: {
-        allProducts: {
-          type: ['Product'],
-          resolve: () => {
-            return products.map((product: ProductType) => {
-              return {
-                id: product.id,
-                title: product.title,
-                price: product.price,
-                description: product.description,
-                image: product.image,
-              }
-            })
-          },
-        },
+export const sourceNodes: GatsbyNode['sourceNodes'] = async ({
+  actions,
+  createNodeId,
+  createContentDigest,
+}) => {
+  const { createNode } = actions
+  const response = await fetch('http://localhost:3001/products')
+  const data: ProductType[] = await response.json()
+  data.forEach((product: ProductType) => {
+    const node = {
+      ...product,
+      id: createNodeId(`Product-${product.id}`),
+      internal: {
+        type: 'Product',
+        contentDigest: createContentDigest(product),
       },
     }
-    createResolvers(resolvers)
-  },
+    createNode(node)
+  })
 }
-
-exports.createSchemaCustomization = gatsbyNode.createSchemaCustomization
-exports.createResolvers = gatsbyNode.createResolvers

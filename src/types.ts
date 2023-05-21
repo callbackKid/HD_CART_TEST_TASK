@@ -1,5 +1,3 @@
-import { StringMappingType } from 'typescript'
-
 export type ProductType = {
   id: number
   title: string
@@ -8,6 +6,12 @@ export type ProductType = {
   image: string
 }
 
-export type IndexPageData = {
-  allProducts: ProductType[]
+export type ProductNode = {
+  node: ProductType
+}
+
+export type QueryType = {
+  allProduct: {
+    edges: ProductNode[]
+  }
 }
