@@ -1,8 +1,8 @@
 import { GatsbyNode } from 'gatsby'
 import { ProductType, ProductNode, QueryType } from './src/types'
 import path from 'path'
-
-const fetch = require('node-fetch')
+import products from './src/eshop.json'
+//const fetch = require('node-fetch')
 
 export const sourceNodes: GatsbyNode['sourceNodes'] = async ({
   actions,
@@ -10,9 +10,9 @@ export const sourceNodes: GatsbyNode['sourceNodes'] = async ({
   createContentDigest,
 }) => {
   const { createNode } = actions
-  const response = await fetch('http://localhost:3001/products')
-  const data: ProductType[] = await response.json()
-  data.forEach((product: ProductType) => {
+  //const response = await fetch('http://localhost:3001/products')
+  //const data: ProductType[] = await response.json()
+  products.products.forEach((product: ProductType) => {
     const node = {
       ...product,
       id: createNodeId(`Product-${product.id}`),
