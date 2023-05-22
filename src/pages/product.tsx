@@ -10,7 +10,7 @@ type ProductPageProps = {
 }
 
 export const query = graphql`
-  query ($id: String!) {
+  query ($id: String) {
     product(id: { eq: $id }) {
       id
       title
