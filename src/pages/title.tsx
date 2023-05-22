@@ -1,7 +1,7 @@
 import * as React from 'react'
-import { Link, useStaticQuery, graphql } from 'gatsby'
+import { useStaticQuery, graphql } from 'gatsby'
 
-export const Title = () => {
+export const Title = ({ className }: { className: string }) => {
   const data = useStaticQuery(graphql`
     query {
       site {
@@ -11,5 +11,5 @@ export const Title = () => {
       }
     }
   `)
-  return <h1>{data.site.siteMetadata.title}</h1>
+  return <h1 className={className}>{data.site.siteMetadata.title}</h1>
 }

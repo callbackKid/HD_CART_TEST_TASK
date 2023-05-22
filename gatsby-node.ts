@@ -43,10 +43,9 @@ export const createPages: GatsbyNode['createPages'] = async ({ graphql, actions 
   data &&
     data.allProduct.edges.forEach(({ node }: ProductNode) => {
       createPage({
-        path: `/product/${node.id}`,
+        path: `/${node.id}`,
         component: path.resolve(`./src/pages/product.tsx`),
         context: {
-          pagePath: path,
           id: node.id,
         },
       })
