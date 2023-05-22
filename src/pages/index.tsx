@@ -3,7 +3,7 @@ import type { HeadFC, PageProps } from 'gatsby'
 import { Link, graphql, useStaticQuery } from 'gatsby'
 import Seo from '../components/Seo'
 import { ProductNode, QueryType } from '../types'
-import { Title } from './title'
+import Title from './title'
 import './styles.css'
 
 const IndexPage: React.FC<PageProps<ProductNode>> = () => {
